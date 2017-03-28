@@ -25,7 +25,7 @@ public class EntityManager {
 
         for (String key : config.getKeys(false)) {
             try {
-                entityDataList.add(EntityData.fromConfig(config.getConfigurationSection(key)));
+                entityDataList.add(EntityData.fromConfig(key, config.getConfigurationSection(key)));
             } catch (Exception e) {
                 plugin.getLogger().log(Level.SEVERE, "Failed to load entity data: '" + key + "'", e);
             }
@@ -36,5 +36,9 @@ public class EntityManager {
         return entityDataList.stream()
                 .filter(entityData -> entityData.getEntityTypes().contains(type))
                 .collect(Collectors.toList());
+    }
+
+    public List<EntityData> getEntityDataList() {
+        return entityDataList;
     }
 }

@@ -2,10 +2,22 @@ prefix: "&8\u00bb&6 "
 no-permission: "&cYou need the permission '{0}' to do that!"
 
 command:
+  info:
+    template:
+    - "&8&m--------&c {0} &8&m--------"
+    - "&6Command: &c{1}"
+    - "&6Entities: &c{2}"
+    - "&6Item requirements:"
+    - "{3}"
+    item-info:
+    - "&8- &6Material: &c{0}"
+    - "&8- &6Data: &c{1}"
+    - "&8- &6Name: &c{2}"
   usage:
   - "&8&m-------&c Entity&6Commands &8&m-------"
   - "&cUsage:"
-  - "&7/entitycommands &6reload"
+  - "&7/entitycommands &6reload &8-&c Reloads the config"
+  - "&7/entitycommands &6info &8-&c Shows all entity-commands"
   fail:
     only-players: "&cOnly players can use this command!"
     no-player: "&cThe player '{0}' does not exist!"

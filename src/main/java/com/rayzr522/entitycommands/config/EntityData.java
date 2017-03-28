@@ -16,33 +16,42 @@ import java.util.List;
  * Created by Rayzr522 on 3/27/17.
  */
 public class EntityData {
+    private String key;
     private List<EntityType> entityTypes = Lists.newArrayList();
     private ItemInfo itemInfo;
     private String command;
 
-    public EntityData(List<EntityType> entityTypes, ItemInfo itemInfo, String command) {
+    public EntityData(String key, List<EntityType> entityTypes, ItemInfo itemInfo, String command) {
+        this.key = key;
         this.entityTypes = entityTypes;
         this.itemInfo = itemInfo;
         this.command = command;
     }
 
     /**
+     *
+     * @param key
      * @param config The {@link ConfigurationSection} to load the data from
      * @return The {@link EntityData} represented by the data
      */
-    public static EntityData fromConfig(ConfigurationSection config) {
+    public static EntityData fromConfig(String key, ConfigurationSection config) {
         Validate.isTrue(config.contains("entities"), "EntityData is missing 'entities'!");
-        Validate.isTrue(config.contains("item"), "EntityData is missing 'item'!");
         Validate.isTrue(config.contains("command"), "EntityData is missing 'command'!");
 
         List<EntityType> entityTypes = ConfigUtils.getEnumList(EntityType.class, config, "entities");
         if (entityTypes == null || entityTypes.isEmpty()) {
             throw new IllegalArgumentException("No valid entity types were specified!");
         }
+        ItemInfo itemInfo = new ItemInfo();
+        if (config.isConfigurationSection("item")) {
+            itemInfo = ItemInfo.fromConfig(config.getConfigurationSection("item"));
+        }
 
-        ItemInfo itemInfo = ItemInfo.fromConfig(config.getConfigurationSection("item"));
+        return new EntityData(key, entityTypes, itemInfo, config.getString("command"));
+    }
 
-        return new EntityData(entityTypes, itemInfo, config.getString("command"));
+    public String getKey() {
+        return key;
     }
 
     public List<EntityType> getEntityTypes() {

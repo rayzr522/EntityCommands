@@ -1,6 +1,8 @@
 package com.rayzr522.entitycommands.config;
 
+import com.rayzr522.entitycommands.EntityCommands;
 import com.rayzr522.entitycommands.utils.ConfigUtils;
+import com.rayzr522.entitycommands.utils.TextUtils;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
@@ -19,7 +21,7 @@ public class ItemInfo {
     private short data = NULL_SHORT;
     private String name = null;
 
-    private ItemInfo() {
+    ItemInfo() {
         // Empty for use with #fromConfig
     }
 
@@ -69,6 +71,16 @@ public class ItemInfo {
         }
 
         return true;
+    }
+
+    public String getDisplayString() {
+        EntityCommands plugin = EntityCommands.getInstance();
+
+        return plugin.trRaw("command.info.item-info",
+                getMaterial().isPresent() ? TextUtils.prettyEnum(material.name()) : "Any",
+                getData().isPresent() ? data : "Any",
+                getName().isPresent() ? name : "Any"
+        );
     }
 
     public Optional<Material> getMaterial() {

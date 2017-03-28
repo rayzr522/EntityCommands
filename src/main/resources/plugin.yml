@@ -3,10 +3,7 @@ name: EntityCommands
 version: 1.0.0
 description: Click players with configurable items to run commands!
 author: Rayzr
-#depend: [CreativelyNamedLib]
-#commands:
-#  entitycommands:
-#    description: EntityCommands main command
-#    aliases: [alias1,alias2]
-#    usage: "/entitycommands [command]"
-#    permission: EntityCommands.main
+commands:
+  entitycommands:
+    description: EntityCommands main command
+    usage: "/entitycommands [reload]"

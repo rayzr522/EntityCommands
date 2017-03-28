@@ -1,0 +1,24 @@
+# --------------------------------------------------------------------
+# Available command placeholders:
+# || {name} - Name of the entity (if entity has a name)
+# || {user} - Name of the user who clicked the entity (you!)
+#
+# Commands prefixed with 'p:' are run as the player instead of console
+# --------------------------------------------------------------------
+
+commands:
+  punish-gui:
+    # Applicable players
+    entities:
+    - player
+    # Item requirements
+    item:
+      # Type of DIAMOND
+      material: diamond
+      # Metadata of 0
+      data: 0
+      # Name
+      name: "&cBan GUI"
+    # Set up to work with Punishment GUI
+    # -- https://dev.bukkit.org/projects/punishment-gui
+    command: "p:punish {name} Broke the rules"

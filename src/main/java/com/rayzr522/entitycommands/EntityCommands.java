@@ -1,13 +1,16 @@
 package com.rayzr522.entitycommands;
 
+import com.rayzr522.entitycommands.command.CommandHandler;
+import com.rayzr522.entitycommands.config.EntityManager;
+import com.rayzr522.entitycommands.config.Language;
+import com.rayzr522.entitycommands.event.EventListener;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.entity.EntityType;
+import org.bukkit.plugin.java.JavaPlugin;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
-
-import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.plugin.java.JavaPlugin;
-
-import com.rayzr522.creativelynamedlib.config.Messages;
 
 /**
  * @author Rayzr
@@ -15,11 +18,15 @@ import com.rayzr522.creativelynamedlib.config.Messages;
 public class EntityCommands extends JavaPlugin {
     private static EntityCommands instance;
 
-    private Messages lang = new Messages();
+    private Language lang = new Language();
+    private EntityManager entityManager = new EntityManager(this);
 
     @Override
     public void onEnable() {
         instance = this;
+
+        getCommand("entitycommands").setExecutor(new CommandHandler(this));
+        getServer().getPluginManager().registerEvents(new EventListener(this), this);
 
         reload();
     }
@@ -30,13 +37,14 @@ public class EntityCommands extends JavaPlugin {
     }
     
     /**
-     * (Re)loads all configs from the disk
+     * (Re)loads all configs fromConfig the disk
      */
     public void reload() {
         saveDefaultConfig();
         reloadConfig();
-        
+
         lang.load(getConfig("messages.yml"));
+        entityManager.load(getConfig().getConfigurationSection("commands"));
     }
 
     /**
@@ -75,7 +83,7 @@ public class EntityCommands extends JavaPlugin {
     }
     
     /**
-     * Returns a message from the language file
+     * Returns a message fromConfig the language file
      * 
      * @param key The key of the message to translate
      * @param objects The formatting objects to use
@@ -86,7 +94,7 @@ public class EntityCommands extends JavaPlugin {
     }
 
     /**
-     * Returns a message from the language file without adding the prefix
+     * Returns a message fromConfig the language file without adding the prefix
      * 
      * @param key The key of the message to translate
      * @param objects The formatting objects to use
@@ -97,12 +105,16 @@ public class EntityCommands extends JavaPlugin {
     }
 
     /**
-     * @return The {@link Messages} instance for this plugin
+     * @return The {@link Language} instance for this plugin
      */
-    public Messages getLang() {
+    public Language getLang() {
         return lang;
     }
-    
+
+    public EntityManager getEntityManager() {
+        return entityManager;
+    }
+
     public static EntityCommands getInstance() {
         return instance;
     }

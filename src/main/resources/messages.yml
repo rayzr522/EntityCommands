@@ -2,7 +2,14 @@ prefix: "&8\u00bb&6 "
 no-permission: "&cYou need the permission '{0}' to do that!"
 
 command:
+  usage:
+  - "&8&m-------&c Entity&6Commands &8&m-------"
+  - "&cUsage:"
+  - "&7/entitycommands &6reload"
   fail:
     only-players: "&cOnly players can use this command!"
     no-player: "&cThe player '{0}' does not exist!"
     not-number: "&c'{0}' is not a valid number!"
+
+config:
+  reloaded: "&6The config has been &creloaded!"
